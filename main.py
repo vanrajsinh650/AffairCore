@@ -1,123 +1,160 @@
+#!/usr/bin/env python3
+"""
+Unified Main Script - Runs both IndiaBix and PendulumEdu scrapers
+Outputs are organized in separate folders:
+- IndiaBix/output/
+- pendulumedu/output/
+"""
+
 import sys
 import logging
-import os
+from pathlib import Path
 from datetime import datetime
-from config import get_date_range
-from scraper import scrape_weekly_questions
-from translator import translate_questions_with_ai
-from pdf_generator import PDFGenerator
-from pdf_generator_compact import PDFGeneratorCompact
 
+# Add both modules to path
+root_dir = Path(__file__).parent
+sys.path.insert(0, str(root_dir))
+sys.path.insert(0, str(root_dir / "IndiaBix"))
+sys.path.insert(0, str(root_dir / "pendulumedu"))
+
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('scraper.log'),
-        logging.StreamHandler()
-    ]
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 )
-
 logger = logging.getLogger(__name__)
 
 
-def main():
-    """Main function"""
-    
-    logger.info("="*60)
-    logger.info("IndiaBix Current Affairs Scraper - AI Translation")
-    logger.info("="*60)
-    
+def run_indiabix():
+    """Run IndiaBix scraper and PDF generation"""
+    print("\n" + "="*80)
+    print(" " * 20 + "INDIABIX CURRENT AFFAIRS SCRAPER")
+    print("="*80 + "\n")
+
     try:
-        dates = get_date_range()
-        start_date = dates[-1].strftime('%Y-%m-%d')
-        end_date = dates[0].strftime('%Y-%m-%d')
-        
-        logger.info(f"Date range: {start_date} to {end_date}")
-        
-        logger.info("Scraping questions...")
-        print("\nScraping questions...")
-        questions = scrape_weekly_questions(dates)
-        
-        if not questions:
-            print("No questions found")
-            return False
-        
-        logger.info(f"Scraped {len(questions)} questions")
-        print(f"Scraped {len(questions)} questions")
-        
-        gujarati_questions = translate_questions_with_ai(questions)
-        
-        watermark_path = os.path.abspath("pragati_setu.jpg")
-        
-        if os.path.exists(watermark_path):
-            print(f"Watermark loaded: {watermark_path}")
-        else:
-            print(f"WARNING: Watermark not found at {watermark_path}")
-            print(f"Current directory: {os.getcwd()}")
-            watermark_path = None
-        
-        logger.info("Generating detailed PDF...")
-        print("\nGenerating Detailed PDF (Style 1)...")
-        
-        pdf_gen_detailed = PDFGenerator(
-            output_dir="output", 
-            language='gu',
-            watermark_image=watermark_path
-        )
-        
-        pdf_path_detailed = pdf_gen_detailed.generate_pdf(
-            gujarati_questions,
-            start_date=start_date,
-            end_date=end_date
-        )
-        
-        logger.info("Generating compact table PDF...")
-        print("\nGenerating Compact Table PDF (Style 2)...")
-        
-        pdf_gen_compact = PDFGeneratorCompact(
-            output_dir="output", 
-            language='gu',
-            watermark_image=watermark_path  # Added watermark here
-        )
-        
-        pdf_path_compact = pdf_gen_compact.generate_pdf(
-            gujarati_questions,
-            start_date=start_date,
-            end_date=end_date
-        )
-        
-        print("\n" + "="*60)
-        print("SUCCESS! BOTH PDFs GENERATED")
-        print("="*60)
-        
-        if pdf_path_detailed:
-            print(f"PDF 1 (Detailed): {pdf_path_detailed}")
-        else:
-            print("PDF 1 (Detailed): FAILED")
-        
-        if pdf_path_compact:
-            print(f"PDF 2 (Compact): {pdf_path_compact}")
-        else:
-            print("PDF 2 (Compact): FAILED")
-        
-        print(f"\nTotal questions: {len(gujarati_questions)}")
-        print(f"\nFiles created:")
-        print(f"output/questions_english.json")
-        print(f"output/questions_gujarati.json")
-        if pdf_path_detailed:
-            print(f"{pdf_path_detailed}")
-        if pdf_path_compact:
-            print(f"{pdf_path_compact}")
-        print("="*60)
-        
-        return pdf_path_detailed and pdf_path_compact
-        
+        # Import IndiaBix modules
+        sys.path.insert(0, str(root_dir / "IndiaBix"))
+        from IndiaBix.main import main as indiabix_main
+
+        # Run IndiaBix scraper
+        result = indiabix_main()
+        return result
+
     except Exception as e:
-        logger.error(f"Error: {str(e)}", exc_info=True)
-        print(f"\nError: {str(e)}")
+        logger.error(f"IndiaBix scraper failed: {str(e)}", exc_info=True)
+        print(f"\n✗ IndiaBix scraper error: {str(e)}")
+        return False
+
+
+def run_pendulumedu():
+    """Run PendulumEdu scraper and PDF generation"""
+    print("\n" + "="*80)
+    print(" " * 15 + "PENDULUMEDU CURRENT AFFAIRS SCRAPER")
+    print("="*80 + "\n")
+
+    try:
+        # Import PendulumEdu modules
+        sys.path.insert(0, str(root_dir / "pendulumedu"))
+        from pendulumedu.main import main as pendulumedu_main
+
+        # Run PendulumEdu scraper
+        pendulumedu_main()
+        return True
+
+    except Exception as e:
+        logger.error(f"PendulumEdu scraper failed: {str(e)}", exc_info=True)
+        print(f"\n✗ PendulumEdu scraper error: {str(e)}")
+        return False
+
+
+def display_menu():
+    """Display menu for user to choose which scraper to run"""
+    print("\n" + "="*80)
+    print(" " * 25 + "CURRENT AFFAIRS SCRAPER")
+    print("="*80)
+    print("\nChoose which scraper to run:")
+    print("1. IndiaBix only")
+    print("2. PendulumEdu only")
+    print("3. Both (IndiaBix + PendulumEdu)")
+    print("4. Exit")
+
+    choice = input("\nEnter your choice (1-4): ").strip()
+    return choice
+
+
+def print_summary(indiabix_success, pendulumedu_success):
+    """Print final summary"""
+    print("\n" + "="*80)
+    print(" " * 30 + "SUMMARY")
+    print("="*80)
+
+    print("\n📦 Output Locations:")
+    print(f"   IndiaBix:    {root_dir / 'IndiaBix' / 'output'}")
+    print(f"   PendulumEdu: {root_dir / 'pendulumedu' / 'output'}")
+
+    print("\n📊 Results:")
+    if indiabix_success:
+        print("   ✓ IndiaBix scraper:    SUCCESS")
+    else:
+        print("   ✗ IndiaBix scraper:    SKIPPED/FAILED")
+
+    if pendulumedu_success:
+        print("   ✓ PendulumEdu scraper: SUCCESS")
+    else:
+        print("   ✗ PendulumEdu scraper: SKIPPED/FAILED")
+
+    print("\n" + "="*80 + "\n")
+
+
+def main():
+    """Main orchestrator"""
+    print("\n🚀 Current Affairs Scraper - Unified Entry Point")
+    print(f"📍 Root Directory: {root_dir}")
+    print(f"⏰ Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+    # Uncomment below for interactive mode, or keep for automated run
+    # choice = display_menu()
+
+    # For now, run both by default
+    choice = "3"
+
+    indiabix_success = False
+    pendulumedu_success = False
+
+    if choice == "1":
+        indiabix_success = run_indiabix()
+    elif choice == "2":
+        pendulumedu_success = run_pendulumedu()
+    elif choice == "3":
+        indiabix_success = run_indiabix()
+        pendulumedu_success = run_pendulumedu()
+    elif choice == "4":
+        print("\n👋 Exiting...")
+        return
+    else:
+        print("\n❌ Invalid choice. Please try again.")
+        return main()
+
+    # Print summary
+    print_summary(indiabix_success, pendulumedu_success)
+
+    # Return success status
+    if indiabix_success or pendulumedu_success:
+        print("✓ Scraping completed successfully!")
+        return True
+    else:
+        print("✗ Scraping encountered errors. Check logs for details.")
         return False
 
 
 if __name__ == "__main__":
-    success = main()
-    sys.exit(0 if success else 1)
+    try:
+        success = main()
+        sys.exit(0 if success else 1)
+    except KeyboardInterrupt:
+        print("\n\n⚠️  Interrupted by user")
+        sys.exit(1)
+    except Exception as e:
+        logger.error(f"Fatal error: {str(e)}", exc_info=True)
+        print(f"\n❌ Fatal error: {str(e)}")
+        sys.exit(1)

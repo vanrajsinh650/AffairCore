@@ -1,12 +1,13 @@
 import sys
 import logging
 import os
+from pathlib import Path
 from datetime import datetime
-from IndiaBix.config import get_date_range
-from IndiaBix.scraper import scrape_weekly_questions
-from IndiaBix.translator import translate_questions_with_ai
-from IndiaBix.pdf_generator import PDFGenerator
-from IndiaBix.pdf_generator_compact import PDFGeneratorCompact
+from config import get_date_range
+from scraper import scrape_weekly_questions
+from translator import translate_questions_with_ai
+from pdf_generator import PDFGenerator
+from pdf_generator_compact import PDFGeneratorCompact
 
 logging.basicConfig(
     level=logging.INFO,
@@ -46,23 +47,26 @@ def main():
         print(f"Scraped {len(questions)} questions")
         
         gujarati_questions = translate_questions_with_ai(questions)
-        
-        watermark_path = os.path.abspath("pragati_setu.jpg")
-        
-        if os.path.exists(watermark_path):
+
+        # Use Path to get watermark relative to this script file
+        watermark_path = Path(__file__).parent / "pragati_setu.jpg"
+
+        if watermark_path.exists():
             print(f"Watermark loaded: {watermark_path}")
         else:
             print(f"WARNING: Watermark not found at {watermark_path}")
-            print(f"Current directory: {os.getcwd()}")
             watermark_path = None
-        
+
+        # Set output directory relative to this script
+        output_dir = Path(__file__).parent / "output"
+
         logger.info("Generating detailed PDF...")
         print("\nGenerating Detailed PDF (Style 1)...")
-        
+
         pdf_gen_detailed = PDFGenerator(
-            output_dir="output", 
+            output_dir=str(output_dir),
             language='gu',
-            watermark_image=watermark_path
+            watermark_image=str(watermark_path) if watermark_path else None
         )
         
         pdf_path_detailed = pdf_gen_detailed.generate_pdf(
@@ -73,11 +77,11 @@ def main():
         
         logger.info("Generating compact table PDF...")
         print("\nGenerating Compact Table PDF (Style 2)...")
-        
+
         pdf_gen_compact = PDFGeneratorCompact(
-            output_dir="output", 
+            output_dir=str(output_dir),
             language='gu',
-            watermark_image=watermark_path  # Added watermark here
+            watermark_image=str(watermark_path) if watermark_path else None
         )
         
         pdf_path_compact = pdf_gen_compact.generate_pdf(
