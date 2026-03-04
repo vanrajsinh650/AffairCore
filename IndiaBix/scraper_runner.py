@@ -22,62 +22,145 @@ from translator import translate_questions_with_ai
 # on Streamlit Cloud when weasyprint system libs are not installed at import time.
 
 
-# ── ReportLab fallback PDF generator (in-memory, English, no system fonts) ────
+# ── Professional PDF generator matching reference WeasyPrint design ─────────────
 def _generate_pdf_bytes_reportlab(questions: list, date_str: str) -> bytes:
-    """Generate PDF bytes in-memory using English text and default fonts.
-    Zero dependencies on system C libraries or Unicode fonts — always works."""
+    """Generate styled PDF bytes in-memory using ReportLab platypus.
+    Design matches reference CSS: blue title bar, question cards, green answer."""
     from io import BytesIO
+    from html import escape as _esc
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
     from reportlab.lib.units import cm
     from reportlab.lib import colors
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
-    from reportlab.lib.enums import TA_CENTER
+    from reportlab.platypus import (
+        SimpleDocTemplate, Paragraph, Spacer, HRFlowable,
+        Table, TableStyle, KeepTogether
+    )
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
+
+    # ── Colors matching reference CSS ─────────────────────────────────────────
+    BLUE      = colors.HexColor("#1a4d8f")
+    BLUE_LINK = colors.HexColor("#0066cc")
+    DARK_TEXT = colors.HexColor("#333333")
+    GREY_TEXT = colors.HexColor("#555555")
+    DATE_TEXT = colors.HexColor("#666666")
+    ANS_TEXT  = colors.HexColor("#1a1a1a")
+    ANS_BG    = colors.HexColor("#e8f5e9")
+    ANS_BAR   = colors.HexColor("#2d5f2e")
+    CARD_BG   = colors.HexColor("#fafafa")
+    CARD_BDR  = colors.HexColor("#e0e0e0")
+    EXP_BG    = colors.HexColor("#f5f5f5")
 
     buf = BytesIO()
     doc = SimpleDocTemplate(
         buf, pagesize=A4,
-        rightMargin=2*cm, leftMargin=2*cm, topMargin=2*cm, bottomMargin=2*cm
+        rightMargin=1.5*cm, leftMargin=1.5*cm,
+        topMargin=1.5*cm, bottomMargin=2*cm,
+        title="Pragati Setu — Current Affairs",
     )
 
     s = getSampleStyleSheet()
-    title_st = ParagraphStyle("ps_title", parent=s["Title"],
-        fontSize=18, spaceAfter=4, textColor=colors.HexColor("#1a1a2e"), alignment=TA_CENTER)
-    sub_st = ParagraphStyle("ps_sub", parent=s["Normal"],
-        fontSize=10, spaceAfter=10, textColor=colors.HexColor("#666666"), alignment=TA_CENTER)
-    q_st = ParagraphStyle("ps_q", parent=s["Normal"],
-        fontSize=11, spaceAfter=4, leading=16, textColor=colors.HexColor("#1a1a2e"))
-    opt_st = ParagraphStyle("ps_opt", parent=s["Normal"],
-        fontSize=10, spaceAfter=2, leftIndent=16, leading=14, textColor=colors.HexColor("#333333"))
-    ans_st = ParagraphStyle("ps_ans", parent=s["Normal"],
-        fontSize=10, spaceAfter=8, leftIndent=16, leading=14,
-        textColor=colors.HexColor("#007700"), fontName="Helvetica-Bold")
 
+    # ── Styles ─────────────────────────────────────────────────────────────────
+    title_st = ParagraphStyle("rl_title",
+        fontName="Helvetica-Bold", fontSize=20, leading=26,
+        textColor=BLUE, alignment=TA_CENTER, spaceAfter=6)
+
+    sub_st = ParagraphStyle("rl_sub",
+        fontName="Helvetica", fontSize=11, leading=15,
+        textColor=GREY_TEXT, alignment=TA_CENTER, spaceAfter=4)
+
+    date_st = ParagraphStyle("rl_date",
+        fontName="Helvetica-Bold", fontSize=10, leading=14,
+        textColor=DATE_TEXT, alignment=TA_CENTER, spaceAfter=14)
+
+    qhdr_st = ParagraphStyle("rl_qhdr",
+        fontName="Helvetica-Bold", fontSize=11, leading=15,
+        textColor=BLUE, spaceAfter=6)
+
+    q_st = ParagraphStyle("rl_q",
+        fontName="Helvetica", fontSize=10, leading=15,
+        textColor=DARK_TEXT, spaceAfter=8, wordWrap="CJK")
+
+    opt_st = ParagraphStyle("rl_opt",
+        fontName="Helvetica", fontSize=10, leading=14,
+        textColor=DARK_TEXT, leftIndent=12, spaceAfter=4, wordWrap="CJK")
+
+    ans_label_st = ParagraphStyle("rl_ans",
+        fontName="Helvetica-Bold", fontSize=10, leading=14,
+        textColor=ANS_TEXT, spaceAfter=0, wordWrap="CJK")
+
+    footer_st = ParagraphStyle("rl_footer",
+        fontName="Helvetica", fontSize=8,
+        textColor=BLUE_LINK, alignment=TA_CENTER)
+
+    # ── Title block ────────────────────────────────────────────────────────────
     story = [
-        Paragraph("Pragati Setu — Current Affairs", title_st),
-        Paragraph(f"Date: {date_str}   |   Questions: {len(questions)}", sub_st),
-        HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cccccc"), spaceAfter=10),
+        Paragraph("Pragati Setu", title_st),
+        Paragraph("Current Affairs — IndiaBix", sub_st),
+        HRFlowable(width="100%", thickness=3, color=BLUE, spaceAfter=6),
+        Paragraph(f"Date: {_esc(date_str)}   |   Questions: {len(questions)}", date_st),
     ]
 
-    from html import escape as _esc
-
     labels = ["A", "B", "C", "D"]
+
     for i, q in enumerate(questions, 1):
-        # escape() prevents & < > % from crashing ReportLab's XML Paragraph parser
-        qt = _esc(q.get("question", "").strip())
-        story.append(Paragraph(f"<b>Q{i}.</b> {qt}", q_st))
-
-        for j, opt in enumerate(q.get("options", [])):
-            lbl = labels[j] if j < 4 else str(j + 1)
-            story.append(Paragraph(f"{lbl}. {_esc(str(opt))}", opt_st))
-
+        qt  = _esc(q.get("question", "").strip())
         ans = _esc(q.get("correct_answer", "").strip())
+        opts = q.get("options", [])
+
+        # ── Build card contents ─────────────────────────────────────────────
+        card_items = [
+            Paragraph(f"Question {i}", qhdr_st),
+            Paragraph(qt or "—", q_st),
+        ]
+        for j, opt in enumerate(opts):
+            lbl = labels[j] if j < 4 else str(j + 1)
+            card_items.append(Paragraph(f"<b>{lbl}.</b> {_esc(str(opt))}", opt_st))
+
         if ans:
-            story.append(Paragraph(f"Ans: {ans}", ans_st))
-        story.append(Spacer(1, 6))
+            # Green answer box using a 1-cell table
+            ans_table = Table(
+                [[Paragraph(f"<b>✓ Answer:</b> {ans}", ans_label_st)]],
+                colWidths=["100%"],
+            )
+            ans_table.setStyle(TableStyle([
+                ("BACKGROUND",  (0,0), (-1,-1), ANS_BG),
+                ("LEFTPADDING",  (0,0), (-1,-1), 8),
+                ("RIGHTPADDING", (0,0), (-1,-1), 8),
+                ("TOPPADDING",   (0,0), (-1,-1), 8),
+                ("BOTTOMPADDING",(0,0), (-1,-1), 8),
+                ("LINEBEFORE",  (0,0), (0,-1), 4, ANS_BAR),
+                ("ROWBACKGROUNDS",(0,0),(-1,-1),[ANS_BG]),
+            ]))
+            card_items.append(Spacer(1, 6))
+            card_items.append(ans_table)
+
+        # ── Wrap in question card (bordered table) ──────────────────────────
+        card_table = Table(
+            [[card_items]],
+            colWidths=[doc.width],
+        )
+        card_table.setStyle(TableStyle([
+            ("BACKGROUND",   (0,0), (-1,-1), CARD_BG),
+            ("BOX",          (0,0), (-1,-1), 1,  CARD_BDR),
+            ("LEFTPADDING",  (0,0), (-1,-1), 12),
+            ("RIGHTPADDING", (0,0), (-1,-1), 12),
+            ("TOPPADDING",   (0,0), (-1,-1), 10),
+            ("BOTTOMPADDING",(0,0), (-1,-1), 10),
+            ("VALIGN",       (0,0), (-1,-1), "TOP"),
+        ]))
+
+        story.append(KeepTogether([card_table, Spacer(1, 10)]))
+
+    # ── Footer ─────────────────────────────────────────────────────────────────
+    story.append(Spacer(1, 10))
+    story.append(HRFlowable(width="100%", thickness=0.5, color=CARD_BDR, spaceAfter=6))
+    story.append(Paragraph("Download Pragati Setu App", footer_st))
 
     doc.build(story)
     return buf.getvalue()
+
 
 
 class CallbackHandler(logging.Handler):
