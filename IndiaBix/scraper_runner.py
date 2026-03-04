@@ -78,10 +78,16 @@ def run_pipeline(
         if log_callback:
             log_callback(msg)
 
-    # Redirect root logger to callback
+    # Redirect root logger to callback, suppress console (StreamHandler) output
     root_logger = logging.getLogger()
     old_handlers = root_logger.handlers[:]
     cb_handler = None
+
+    # Remove existing StreamHandlers (console) so logs only flow to the UI
+    stream_handlers = [h for h in old_handlers if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler)]
+    for sh in stream_handlers:
+        root_logger.removeHandler(sh)
+
     if log_callback:
         cb_handler = CallbackHandler(log_callback)
         cb_handler.setFormatter(logging.Formatter("%(levelname)s  %(message)s"))
@@ -176,5 +182,10 @@ def run_pipeline(
         # Restore original logger handlers
         if cb_handler and cb_handler in root_logger.handlers:
             root_logger.removeHandler(cb_handler)
+            
+        # Re-attach the old console handlers
+        for h in old_handlers:
+            if h not in root_logger.handlers:
+                root_logger.addHandler(h)
 
     return result

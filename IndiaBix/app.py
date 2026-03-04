@@ -15,13 +15,17 @@ import base64
 import streamlit as st
 
 # ── Session-state initialisation (early so it's ready for config) ────────────
-for key, default in {
+# On a fresh page load, we always start clean (not running, not done).
+# Within a session, st.rerun() loops don't reset this because the session persists.
+_DEFAULTS = {
     "running": False,
     "done": False,
     "logs": [],
     "result": None,
     "theme": "Light",
-}.items():
+    "_date_obj": None,
+}
+for key, default in _DEFAULTS.items():
     if key not in st.session_state:
         st.session_state[key] = default
 
@@ -58,15 +62,16 @@ st.markdown(
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-        /* Force global font BUT exclude icons so Streamlit UI elements don't show raw text */
-        html, body, .stApp {{
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        /* Force typography font, but carefully exclude Streamlit's internal icons to prevent _arrow_right_ss text bugs */
+        h1, h2, h3, h4, h5, h6, p, a, button, input, div:not([class*="stIcon"]):not([class*="st-emotion"]):not([data-testid="stExpanderToggleIcon"]) {{
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }}
         
-        /* Protect Streamlit internal fonts (icons, material symbols) */
+        /* Explicitly protect Streamlit's Material Symbols */
         .stIcon, 
-        [class*="icon"], 
-        [data-testid="stExpanderToggleIcon"] {{
+        [data-testid="stExpanderToggleIcon"],
+        [class*="icon"],
+        .material-symbols-rounded {{
             font-family: "Material Symbols Rounded", "Material Icons", sans-serif !important;
         }}
         
@@ -412,7 +417,8 @@ if run_clicked:
         st.rerun()
 
 # ── Running pipeline (threaded) ───────────────────────────────────────────────
-if st.session_state.running and not st.session_state.done:
+# Strict check: only run if BOTH running=True AND a valid date was set THIS session
+if st.session_state.running and not st.session_state.done and isinstance(st.session_state.get("_date_obj"), datetime):
     from scraper_runner import run_pipeline
 
     date_obj = st.session_state["_date_obj"]
