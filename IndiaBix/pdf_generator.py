@@ -21,8 +21,7 @@ class PDFGenerator:
     def generate_pdf(self, questions: List[Dict], start_date: str, end_date: str) -> str:
         """Generate detailed PDF using WeasyPrint with proper word wrapping"""
         try:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"current_affairs_detailed_{timestamp}.pdf"
+            filename = "current_affairs_detailed.pdf"
             filepath = os.path.join(self.output_dir, filename)
             
             logger.info(f"Generating detailed PDF: {filename}")

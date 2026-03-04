@@ -1,4 +1,7 @@
 # ==========================
+# Docker
+.dockerignore
+# ==========================
 # IndiaBix Sub-project .gitignore
 # ==========================
 

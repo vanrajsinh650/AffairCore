@@ -1,0 +1,29 @@
+# ==================================================
+# IndiaBix Scraper - Docker Compose
+# ==================================================
+# Commands:
+#   docker-compose up          → build + run
+#   docker-compose up --build  → force rebuild + run
+#   docker-compose run scraper → run interactively
+
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: indiabix-scraper:latest
+    container_name: indiabix_scraper
+
+    # Mount the output folder from your host machine into the container.
+    # Generated PDFs will appear in IndiaBix/output/ on your computer.
+    volumes:
+      - ./output:/app/output
+
+    # Load environment variables from .env file (API keys etc.)
+    # Won't fail if .env doesn't exist
+    env_file:
+      - path: .env
+        required: false
+
+    # 'no' = run once and stop (good for a scraper)
+    restart: "no"

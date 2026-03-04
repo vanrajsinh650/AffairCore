@@ -38,8 +38,7 @@ class PDFGeneratorCompact:
             return None
 
         try:
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"current_affairs_compact_{timestamp}.pdf"
+            filename = "current_affairs_compact.pdf"
             filepath = os.path.join(self.output_dir, filename)
             
             logger.info(f"Generating compact PDF: {filename}")

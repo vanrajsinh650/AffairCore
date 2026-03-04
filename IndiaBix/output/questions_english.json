@@ -1,296 +1,156 @@
 [
   {
     "question_no": 1,
-    "question": "Which digital payments company launched an AI-powered natural language search feature built on Microsoft Foundry?",
+    "question": "Which Indian state has established its first Dark Sky Park at Ariyur Shola Reserve Forest in Kolli Hills to promote astrotourism and preserve the night sky?",
+    "options": [
+      "Tamil Nadu",
+      "Kerala",
+      "Karnataka",
+      "Andhra Pradesh"
+    ],
+    "answer": "Option A: Tamil Nadu",
+    "explanation": "Tamil Nadu has set up its first Dark Sky Park at Ariyur Shola Reserve Forest in the Kolli Hills of Namakkal district. The initiative focuses on preserving the natural darkness of the night sky by reducing light pollution, thereby creating ideal conditions for astronomical observation. It also aims to promote astrotourism, educate visitors about celestial bodies such as constellations and planets, and raise awareness about the adverse effects of artificial lighting. Additionally, the project encourages sustainable eco-tourism that supports local tribal communities while ensuring the protection of the surrounding forest ecosystem.",
+    "category": "State",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 2,
+    "question": "Which country’s first-ever Blue Bond, issued by DFCC Bank, was dually listed on NSE International Exchange at GIFT City?",
+    "options": [
+      "Bangladesh",
+      "Maldives",
+      "Nepal",
+      "Sri Lanka"
+    ],
+    "answer": "Option D: Sri Lanka",
+    "explanation": "Sri Lanka is the country whose DFCC Bank issued the first-ever Blue Bond that was dually listed on the NSE International Exchange at GIFT City. The LKR 3 billion bond was initially listed on the Colombo Stock Exchange before being admitted to trading under GIFT City’s offshore regulatory framework. Blue bonds are a specialised subset of green bonds that channel investments into ocean conservation, sustainable fisheries, marine ecosystem protection, and water security projects. The dual listing enhances global investor participation and strengthens the country’s presence in sustainable and innovative financial markets.",
+    "category": "International",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 3,
+    "question": "In which city was Micron’s first India ATMP (Assembly, Test, Mark & Pack) semiconductor plant inaugurated by Prime Minister Narendra Modi?",
+    "options": [
+      "Dholera",
+      "Ahmedabad",
+      "Vadodara",
+      "Sanand"
+    ],
+    "answer": "Option D: Sanand",
+    "explanation": "Sanand is the city where Micron Semiconductor Technology India Pvt Ltd established its first Assembly, Test, Mark & Pack (ATMP) facility in India. The plant was inaugurated by Prime Minister Narendra Modi and marks the beginning of commercial production of made-in-India semiconductor memory modules. With an investment exceeding ₹22,500 crore, the project is a major milestone under the India Semiconductor Mission. The facility includes around 500,000 square feet of cleanroom space and is designed to process imported DRAM and NAND wafers into finished memory products, strengthening India’s role in the global semiconductor value chain.",
+    "category": "Places",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 4,
+    "question": "In which Indian state was the new blind groundwater fish species ‘Gitchak nakana’ discovered in a dug-out well?",
+    "options": [
+      "Manipur",
+      "Assam",
+      "Meghalaya",
+      "Arunachal Pradesh"
+    ],
+    "answer": "Option B: Assam",
+    "explanation": "Assam is the state where the new blind groundwater fish species ‘Gitchak nakana’ was discovered in Goalpara district. This remarkable finding marks the first recorded instance of a groundwater-dwelling fish from Northeast India and the broader Eastern Himalayan region. The tiny, translucent red fish measures about 2 cm in length and exhibits classic subterranean adaptations such as complete blindness, lack of pigmentation, and absence of a skull roof. Found in underground aquifers rather than caves, the discovery highlights the rich yet fragile biodiversity of the Brahmaputra Valley and underscores the need for groundwater conservation.",
+    "category": "State",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 5,
+    "question": "In which city was the National Conference on UDISE+ organised by the Department of School Education & Literacy in February 2026?",
+    "options": [
+      "Cuttack",
+      "Bhubaneswar",
+      "Ranchi",
+      "Raipur"
+    ],
+    "answer": "Option B: Bhubaneswar",
+    "explanation": "Bhubaneswar hosted the two-day National Conference on Unified District Information System for Education Plus (UDISE+), organised by the Department of School Education & Literacy under the Ministry of Education in collaboration with the Government of Odisha. The conference focused on enhancing the reliability, real-time accuracy, and strategic use of UDISE+, which serves as India’s flagship education data platform. Discussions centred on strengthening data integrity, resolving implementation challenges faced by states and union territories, and expanding the system into an AI-compliant decision support framework to enable evidence-based policymaking and effective implementation of Samagra Shiksha and NEP 2020 initiatives.",
+    "category": "Education",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 6,
+    "question": "Which team won their maiden Ranji Trophy title in the 2025-26 season by defeating Karnataka in the final?",
+    "options": [
+      "Ladakh",
+      "Delhi",
+      "Jammu & Kashmir",
+      "Chandigarh"
+    ],
+    "answer": "Option C: Jammu & Kashmir",
+    "explanation": "Jammu & Kashmir secured its first-ever Ranji Trophy title in the 2025–26 season, marking a historic achievement after 67 years of participation in India’s premier domestic first-class cricket tournament. The team defeated Karnataka in the final held at the KSCA Rajnagar Stadium in Hubballi. This victory is regarded as a transformative milestone for cricket in the Union Territory, symbolising resilience, consistent talent development, and competitive growth. The Ranji Trophy, organized annually by the BCCI since 1934–35, features teams from states and union territories across India, making this triumph especially significant.",
+    "category": "Sports",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 7,
+    "question": "Which city set a new Guinness World Record by planting 2,51,446 saplings in one hour on 1 March 2026?",
+    "options": [
+      "Varanasi",
+      "Lucknow",
+      "Prayagraj",
+      "Patna"
+    ],
+    "answer": "Option A: Varanasi",
+    "explanation": "Varanasi achieved a historic milestone by planting 2,51,446 saplings within a single hour, surpassing the previous record held by China for eight years. The large-scale plantation drive was conducted on 350 bighas of land in Domari village along the banks of the Ganga. Around 20,000 participants took part in the synchronised effort, which was officially verified by a Guinness World Records judge. The area has been structured into 60 sectors named after prominent Kashi ghats, creating a symbolic urban forest using the Miyawaki method to promote rapid ecological restoration and biodiversity conservation.",
+    "category": "Places",
+    "date": "2026-03-02"
+  },
+  {
+    "question_no": 8,
+    "question": "Which payments company partnered with Gnani.ai to launch an agentic AI platform enabling in-call UPI payments during live customer conversations?",
     "options": [
       "Paytm",
-      "Google Pay",
-      "Amazon Pay",
-      "PhonePe"
+      "PhonePe",
+      "Razorpay",
+      "BharatPe"
     ],
-    "answer": "Option D: PhonePe",
-    "explanation": "PhonePe introduced an AI-powered natural language search feature built on Microsoft Foundry, transforming how users interact with the app. The feature enables customers to make payments, recharge FASTag, check gold prices, and track transactions using simple voice or text commands. Designed with a hybrid AI model combining on-device and cloud inferencing, it ensures strong privacy safeguards and secure data handling. The conversational interface replaces traditional menu-based navigation with intent-driven routing, making digital payments more intuitive and personalised. With millions of users and merchants across India, this innovation significantly enhances convenience and accessibility in fintech services.",
-    "category": "Technology",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 2,
-    "question": "Which state government announced the launch of CM Shri Schools on the lines of the PM Shri Schools initiative?",
-    "options": [
-      "Haryana",
-      "Punjab",
-      "Rajasthan",
-      "Uttar Pradesh"
-    ],
-    "answer": "Option A: Haryana",
-    "explanation": "Haryana has announced the launch of CM Shri Schools, modelled on the central government’s PM Shri Schools initiative to enhance the quality of state-run education. The new schools will follow the CBSE curriculum pattern, ensuring structured academic standards, skill-based learning, and improved preparation for competitive examinations. The initiative also emphasizes modern infrastructure and better learning outcomes. Additionally, the state continues to implement 25% reservation for Economically Weaker Sections under the Right to Education Act, promoting inclusive access to quality education. This combined reform approach aims to strengthen educational standards and equity across the state.",
-    "category": "State",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 3,
-    "question": "Which state government launched the ‘Meri Rasoi’ scheme to provide free food kits to 40 lakh blue card holder families?",
-    "options": [
-      "Punjab",
-      "Haryana",
-      "Rajasthan",
-      "Uttar Pradesh"
-    ],
-    "answer": "Option A: Punjab",
-    "explanation": "Punjab launched the ‘Meri Rasoi’ scheme to provide free food kits to nearly 40 lakh economically weaker families holding blue cards. The initiative, announced by Chief Minister Bhagwant Mann ahead of the state’s Budget Session, aims to address nutritional gaps among low-income households. Under the first phase from April to June 2026, beneficiaries will receive essential items such as chana dal, sugar, iodized salt, turmeric powder, and mustard oil. The scheme focuses on improving child health, reducing malnutrition, strengthening food security, and ensuring that vulnerable families receive balanced and nutritious food supplies regularly.",
-    "category": "State",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 4,
-    "question": "On which date is National Science Day observed every year in India to honour the discovery of the Raman Effect?",
-    "options": [
-      "February 28",
-      "January 26",
-      "March 8",
-      "April 15"
-    ],
-    "answer": "Option A: February 28",
-    "explanation": "February 28 is observed annually as National Science Day in India to commemorate the discovery of the Raman Effect by Sir C. V. Raman in 1928. This groundbreaking work explained the scattering of light through transparent materials and later earned him the Nobel Prize in Physics in 1930, making him the first Asian Nobel laureate in science. The Government of India officially designated this date as National Science Day in 1986. The occasion promotes scientific awareness, innovation, and research culture, while celebrating India’s significant contributions to global scientific advancement and encouraging future generations in STEM fields.",
-    "category": "Important Days",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 5,
-    "question": "Who has taken additional charge as the Chief Executive Officer (CEO) of NITI Aayog?",
-    "options": [
-      "BVR Subrahmanyam",
-      "Amitabh Kant",
-      "Nidhi Chhibber",
-      "Rajiv Kumar"
-    ],
-    "answer": "Option C: Nidhi Chhibber",
-    "explanation": "Nidhi Chhibber has taken additional charge as the Chief Executive Officer of NITI Aayog following the completion of BVR Subrahmanyam’s three-year term in February 2026. A 1994-batch IAS officer of the Chhattisgarh cadre, she currently serves as Director General of the Development Monitoring and Evaluation Office (DMEO) under NITI Aayog. She has also previously held the position of Chairperson of the Central Board of Secondary Education. Her extensive experience in policy monitoring, evaluation, and education sector reforms positions her to strengthen data-driven governance and performance assessment within India’s premier policy think tank.",
-    "category": "Awards and Honours",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 6,
-    "question": "Which country signed a new MoU with India to strengthen cooperation in forests, wildlife, biodiversity conservation, and climate change?",
-    "options": [
-      "Bhutan",
-      "Bangladesh",
-      "Sri Lanka",
-      "Nepal"
-    ],
-    "answer": "Option D: Nepal",
-    "explanation": "Nepal signed a new Memorandum of Understanding with India to enhance bilateral cooperation in forests, wildlife protection, biodiversity conservation, and climate change mitigation. The agreement focuses on restoring transboundary wildlife corridors, protecting key species such as tigers, elephants, rhinoceroses, and snow leopards, and strengthening protected area management. It also emphasises combating wildlife crime, improving coordination between enforcement agencies, and promoting capacity building for frontline forest staff. Given the shared ecosystems and migratory wildlife habitats across borders, the partnership supports integrated conservation strategies and climate resilience efforts in the Himalayan and adjoining landscapes.",
-    "category": "International",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 7,
-    "question": "Which city will host the AI Summit 2027, as announced?",
-    "options": [
-      "Zurich",
-      "Geneva",
-      "Bern",
-      "Basel"
-    ],
-    "answer": "Option B: Geneva",
-    "explanation": "Geneva will host the AI Summit 2027, marking Switzerland’s significant role in advancing global dialogue on artificial intelligence governance. The announcement was made by Swiss President Guy Parmelin during the AI Impact Summit in New Delhi. Known for being a hub of major international organisations, Geneva provides a neutral platform for multilateral discussions and cooperation. The summit is expected to focus on ethical and inclusive AI frameworks, strengthening partnerships between countries such as Switzerland and India. The hosting also reflects growing global collaboration in AI diplomacy, with the UAE set to host the summit in 2028.",
-    "category": "Places",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 8,
-    "question": "Which organisation successfully conducted three flight trials of the indigenous VSHORADS missile system, making it ready for induction into the Indian armed forces?",
-    "options": [
-      "ISRO",
-      "DRDO",
-      "HAL",
-      "BEL"
-    ],
-    "answer": "Option B: DRDO",
-    "explanation": "DRDO successfully carried out three consecutive flight trials of the indigenous VSHORADS missile system from Chandipur, Odisha, demonstrating its operational readiness. The Very Short Range Air Defence System is a man-portable missile designed to intercept low-flying aircraft, helicopters, drones, and high-speed aerial threats. Developed under the Aatmanirbhar Bharat initiative, the system was tested in its final deployment configuration with trained field operators handling target acquisition and firing. Data from telemetry, radar, and electro-optical tracking confirmed its precision and effectiveness, strengthening India’s short-range and layered air defence capabilities significantly.",
-    "category": "Defence",
-    "date": "2026-03-01"
+    "answer": "Option C: Razorpay",
+    "explanation": "Gnani.ai collaborated with Razorpay to introduce an innovative agentic AI collections platform that enables customers to complete UPI payments during live calls without disconnecting or switching to external links. The platform combines Gnani.ai’s advanced AI systems, capable of handling over 10 million calls daily, with Razorpay’s Model Context Protocol (MCP) server to create a seamless, real-time payment interface. This deployment represents one of India’s first production-level uses of autonomous AI agents executing financial transactions, significantly enhancing operational efficiency for enterprises in sectors such as BFSI, telecom, utilities, and e-commerce.",
+    "category": "Finance",
+    "date": "2026-03-02"
   },
   {
     "question_no": 9,
-    "question": "Which former India captain will have a stand named after him at Mumbai’s Wankhede Stadium?",
+    "question": "Which organisation provided a USD 150 million direct loan and acted as the mandated lead arranger for IIFL Home Finance’s USD 300 million financing package?",
     "options": [
-      "Kapil Dev",
-      "Sunil Gavaskar",
-      "Ravi Shastri",
-      "Sourav Ganguly"
+      "World Bank",
+      "Asian Development Bank",
+      "International Monetary Fund",
+      "Reserve Bank of India"
     ],
-    "answer": "Option C: Ravi Shastri",
-    "explanation": "Ravi Shastri will have a stand named after him at the iconic Wankhede Stadium in Mumbai following approval by the Mumbai Cricket Association during its Apex Council meeting. The Level 1 Stand below the Press Box will bear his name, recognising his long and multifaceted contribution to Indian cricket as a player, captain, head coach, and commentator. A former all-rounder, he was part of India’s 1983 World Cup era and later guided the national team to significant overseas Test victories as coach. The tribute highlights Mumbai’s rich cricketing legacy and honours his enduring association with the sport.",
-    "category": "Sports",
-    "date": "2026-03-01"
+    "answer": "Option B: Asian Development Bank",
+    "explanation": "The USD 300 million financing agreement was structured to expand affordable housing loans, particularly targeting women borrowers from economically weaker and lower-middle-income groups. Out of the total amount, USD 150 million was provided directly by the Asian Development Bank, while the remaining USD 150 million was raised through parallel loans from institutions such as MUFG, Emirates NBD, Sampath Bank, and Hatton National Bank. The Asian Development Bank also served as the mandated lead arranger and bookrunner for the entire package, highlighting its key role in promoting financial inclusion, women’s empowerment, and sustainable urban development in India.",
+    "category": "Finance",
+    "date": "2026-03-02"
   },
   {
     "question_no": 10,
-    "question": "On which date will World NGO Day 2026 be observed globally?",
+    "question": "In which Indian state has GAIL approved a ₹1,736 crore greenfield wind power project as part of its renewable energy expansion?",
     "options": [
-      "February 24",
-      "February 27",
-      "March 1",
-      "March 8"
-    ],
-    "answer": "Option B: February 27",
-    "explanation": "February 27 is observed globally as World NGO Day in 2026, recognizing the vital contributions of non-governmental organisations across sectors such as education, healthcare, environmental protection, human rights, and disaster relief. The day serves as an international platform to appreciate NGOs for their grassroots efforts and to promote awareness, advocacy, and collaboration. It highlights the role of civil society in addressing social inequalities, poverty reduction, and sustainable development. The observance encourages citizens, institutions, and governments to actively participate through volunteering, donations, partnerships, and community initiatives that strengthen the global NGO ecosystem.",
-    "category": "Important Days",
-    "date": "2026-03-01"
-  },
-  {
-    "question_no": 1,
-    "question": "Which company secured a ₹36 crore order to supply fabricated steel products for a BHEL project?",
-    "options": [
-      "Larsen & Toubro Limited",
-      "BMW Ventures Limited",
-      "Tata Projects Limited",
-      "JSW Infrastructure Limited"
-    ],
-    "answer": "Option B: BMW Ventures Limited",
-    "explanation": "BMW Ventures Limited secured a ₹36 crore contract to supply fabricated steel products for a major project executed by Bharat Heavy Electricals Limited (BHEL). The order signifies the company’s strategic expansion into large-scale infrastructure and power sector projects, moving beyond its traditional operational scope. The contract includes the supply of structural steel fabrication and related critical components essential for thermal or industrial infrastructure initiatives. The execution timeline is estimated at 12–18 months, enhancing the company’s order book strength, revenue visibility, and positioning within India’s rapidly growing infrastructure and energy sector.",
-    "category": "Business",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 2,
-    "question": "Which vessel was commissioned as the fourth ship of the Anti-Submarine Warfare Shallow Water Craft (ASW-SWC) project into the Indian Navy in February 2026?",
-    "options": [
-      "INS Kavaratti",
-      "INS Androth",
-      "INS Anjadip",
-      "INS Kadmatt"
-    ],
-    "answer": "Option C: INS Anjadip",
-    "explanation": "INS Anjadip was commissioned into the Indian Navy on 27 February 2026 at Chennai Port as the fourth ship under the Anti-Submarine Warfare Shallow Water Craft project. The ceremony was presided over by the Chief of the Naval Staff, marking a major boost to India’s littoral and coastal defence capabilities. The 77-meter vessel, with a displacement of 1,400 tons, is specially designed for shallow-water anti-submarine operations. With over 80% indigenous content, including defence electronics and weapon systems, it highlights India’s strong commitment to self-reliance in defence manufacturing and maritime security preparedness.",
-    "category": "Defence",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 3,
-    "question": "Which country launched the ‘Zero Prize’, the first-ever results-based environmental award aimed at reducing pollution?",
-    "options": [
-      "India",
-      "China",
-      "United States",
-      "Australia"
-    ],
-    "answer": "Option A: India",
-    "explanation": "India launched the ‘Zero Prize’ as the country’s first results-based environmental award focused on achieving measurable reductions in air, water, and land pollution. The initiative carries a total corpus of ₹5 crore, with ₹1 crore allocated to each of the three categories. It emphasises verified and quantifiable outcomes through third-party audits and scientific monitoring rather than mere declarations or planned actions. The award aligns with broader national initiatives such as Mission LiFE, Swachh Bharat, and net-zero ambitions, promoting accountability and outcome-driven environmental governance across multiple sectors.",
-    "category": "International",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 4,
-    "question": "Which country’s central bank launched the world’s first sovereign financial cloud platform called “Financial Cloud”?",
-    "options": [
-      "UAE",
-      "Saudi Arabia",
-      "Singapore",
-      "Qatar"
-    ],
-    "answer": "Option A: UAE",
-    "explanation": "The UAE launched the world’s first sovereign financial cloud platform through its Central Bank, marking a significant milestone in digital financial infrastructure. The platform, named Financial Cloud, is a fully regulated and secure cloud environment exclusively designed for licensed financial institutions within the country. It ensures strict compliance with data sovereignty, cybersecurity, and regulatory standards while allowing institutions to host critical workloads and applications. The initiative supports the nation’s broader vision of becoming a global fintech and digital economy hub under UAE Vision 2031 and the Dubai Economic Agenda D33, reducing dependence on global hyperscalers.",
-    "category": "International",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 5,
-    "question": "Which Indian airport signed a cargo partnership MoU with Frankfurt Airport to enhance air cargo connectivity between Europe and India?",
-    "options": [
-      "Indira Gandhi International Airport",
-      "Chhatrapati Shivaji Maharaj International Airport",
-      "Rajiv Gandhi International Airport",
-      "Kempegowda International Airport"
-    ],
-    "answer": "Option D: Kempegowda International Airport",
-    "explanation": "Kempegowda International Airport entered into a strategic cargo partnership with Frankfurt Airport to strengthen air cargo connectivity between Europe and India. The Memorandum of Understanding was signed on 25 February 2026 on the sidelines of Air Cargo India 2026 in Mumbai. The collaboration focuses on digitalisation, regulatory optimisation, pharma cargo integrity standards, joint trade lane analytics, and knowledge exchange. This partnership aims to create a more integrated and efficient cargo corridor, reduce dwell times, enhance predictability for airlines and freight forwarders, and support the growing trade volumes between the two regions.",
-    "category": "National",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 6,
-    "question": "Which country did the Indian delegation visit to advance cooperation on transboundary rivers and hydropower projects in February 2026?",
-    "options": [
-      "Bhutan",
-      "Nepal",
-      "Bangladesh",
-      "Myanmar"
-    ],
-    "answer": "Option A: Bhutan",
-    "explanation": "Bhutan was the country visited by an Indian delegation led by the Secretary of the Department of Water Resources, River Development & Ganga Rejuvenation to strengthen cooperation on trans-boundary river management and hydropower projects. The discussions included reviewing ongoing joint initiatives, enhancing hydro-meteorological data sharing, improving flood forecasting systems, and addressing climate-related challenges such as glacial lake outburst floods and extreme weather events. The engagement reinforced the long-standing hydropower partnership between the two nations, which dates back to 1961 and was further strengthened through a bilateral agreement signed in 2006, emphasising sustainable and mutually beneficial resource management.",
-    "category": "International",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 7,
-    "question": "From which date has the Government of India mandated the nationwide sale of E20 petrol with a minimum RON 95 at all retail outlets?",
-    "options": [
-      "1 January 2026",
-      "15 August 2026",
-      "1 April 2026",
-      "1 July 2025"
-    ],
-    "answer": "Option C: 1 April 2026",
-    "explanation": "1 April 2026 marks the official nationwide rollout of E20 petrol with a minimum Research Octane Number (RON) of 95 across all petrol pumps in India. The mandate requires every retail outlet, including public sector units and private oil marketing companies, to replace regular E10 petrol with E20 as the standard grade. This move is a major milestone under the Ethanol Blending Programme aimed at reducing crude oil imports, lowering carbon emissions, supporting farmers through higher ethanol demand, and enhancing engine performance with higher-octane fuel. Higher ethanol blends and special fuels remain outside this mandate.",
-    "category": "National",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 8,
-    "question": "Who was appointed as the Managing Director & Chief Executive Officer (MD & CEO) of Hindustan Oil Exploration Company Limited (HOEC) effective 27 February 2026?",
-    "options": [
-      "Ramasamy Jeevanandam",
-      "Atison Beats",
-      "Anil Agarwal",
-      "Baroruchi Mishra"
-    ],
-    "answer": "Option D: Baroruchi Mishra",
-    "explanation": "Baroruchi Mishra was appointed as the Managing Director and Chief Executive Officer of Hindustan Oil Exploration Company Limited (HOEC), effective 27 February 2026. He succeeded Ramasamy Jeevanandam, who had served in the role since 2019 and stepped down as part of the leadership transition. Mishra brings significant expertise in upstream oil and gas operations, with extensive experience in exploration, production, and business development across Indian and multinational energy firms. His appointment marks an important strategic development for HOEC as it continues to strengthen its position in the independent upstream energy sector.",
-    "category": "Awards and Honours",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 9,
-    "question": "What was India’s global rank among 84 countries in mental health and well-being for young adults (18–34 years) according to the Global Mind Health 2025 report?",
-    "options": [
-      "45th",
-      "52nd",
-      "60th",
-      "72nd"
-    ],
-    "answer": "Option C: 60th",
-    "explanation": "60th rank was secured by India among 84 countries in the Global Mind Health 2025 assessment focusing on young adults aged 18–34 years. The ranking places the country in the lower-middle tier globally, highlighting significant mental health challenges such as stress, anxiety, depression, and loneliness among youth. The report, prepared by the Sapien Labs Centre for the Future of Mental Health, is based on responses from over one million adults using the Mental Health Quotient (MHQ) tool. It emphasises socioeconomic pressures, cultural stigma, limited access to care, and modern lifestyle factors influencing declining mental well-being among younger generations.",
-    "category": "National",
-    "date": "2026-02-28"
-  },
-  {
-    "question_no": 10,
-    "question": "Which Indian state launched ‘Operation Crackdown’ to dismantle organised cybercrime networks?",
-    "options": [
-      "Karnataka",
-      "Telangana",
+      "Gujarat",
+      "Rajasthan",
       "Maharashtra",
-      "Gujarat"
+      "Karnataka"
     ],
-    "answer": "Option B: Telangana",
-    "explanation": "Telangana initiated ‘Operation Crackdown’ as a statewide, multi-agency drive to aggressively target and dismantle organised cybercrime networks. The campaign focuses on offences such as call centre fraud, digital arrest scams, investment fraud, sextortion, and job fraud. Led by the Telangana Police Cyber Security Bureau in coordination with local police, CID, SIT, and other specialised units, the operation involves coordinated raids, arrests, asset seizures, and intelligence-based actions across districts. The initiative aims to disrupt the entire cybercrime ecosystem, from front-end fraudsters to financial handlers, reinforcing a strict zero-tolerance approach toward cyber offenders.",
+    "answer": "Option C: Maharashtra",
+    "explanation": "Maharashtra is the state where GAIL (India) Limited has approved a ₹1,736 crore investment for a greenfield wind power project. This initiative represents the company’s largest single renewable energy investment so far and reflects its strategic transition toward becoming an integrated energy player. The proposed wind farm is expected to have a capacity of around 300–350 MW, with construction likely to begin in 2026–27 and commercial operations targeted for 2028–29. The project supports GAIL’s goal of achieving nearly 2 GW of renewable capacity by 2030 and contributes to India’s broader non-fossil fuel energy ambitions.",
     "category": "State",
-    "date": "2026-02-28"
+    "date": "2026-03-02"
   },
   {
     "question_no": 11,
-    "question": "Which country imposed a temporary ban on poultry meat and table egg imports from India and 39 other nations as a precaution against avian influenza?",
+    "question": "Which bank received RBI approval for SBI Mutual Fund to acquire up to a 9.99% stake through its various schemes?",
     "options": [
-      "United Arab Emirates",
-      "Saudi Arabia",
-      "Qatar",
-      "Oman"
+      "Bandhan Bank",
+      "IDFC First Bank",
+      "AU Small Finance Bank",
+      "RBL Bank"
     ],
-    "answer": "Option B: Saudi Arabia",
-    "explanation": "Saudi Arabia imposed a temporary ban on the import of poultry meat and table eggs from 40 countries, including India, as a preventive measure to safeguard public health. The decision was announced by the Saudi Food and Drug Authority (SFDA) following global risk assessments and reported outbreaks of highly pathogenic avian influenza (HPAI) and Newcastle disease. The restriction excludes heat-treated or fully processed poultry products that meet SFDA certification standards. Additionally, partial restrictions were placed on specific regions in 16 other countries, with authorities committing to periodic reviews and updates based on evolving disease situations worldwide.",
-    "category": "International",
-    "date": "2026-02-28"
+    "answer": "Option A: Bandhan Bank",
+    "explanation": "Bandhan Bank is the institution in which SBI Mutual Fund has been permitted by the Reserve Bank of India to acquire up to a 9.99% stake. The approval allows SBI Mutual Fund to become one of the largest non-promoter shareholders in the bank, signalling strong institutional confidence in its performance and future prospects. The investment reflects optimism regarding improvements in asset quality, expansion of its retail franchise, and overall growth strategy. This development is expected to strengthen the bank’s shareholding structure, improve investor sentiment, and support its long-term capital-raising and expansion initiatives.",
+    "category": "Banking",
+    "date": "2026-03-02"
   }
 ]
