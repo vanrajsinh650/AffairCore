@@ -59,17 +59,19 @@ def _generate_pdf_bytes_reportlab(questions: list, date_str: str) -> bytes:
         HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cccccc"), spaceAfter=10),
     ]
 
+    from html import escape as _esc
+
     labels = ["A", "B", "C", "D"]
     for i, q in enumerate(questions, 1):
-        # Always use English  text — avoids font encoding crash with Gujarati
-        qt = q.get("question", "").strip()
+        # escape() prevents & < > % from crashing ReportLab's XML Paragraph parser
+        qt = _esc(q.get("question", "").strip())
         story.append(Paragraph(f"<b>Q{i}.</b> {qt}", q_st))
 
         for j, opt in enumerate(q.get("options", [])):
             lbl = labels[j] if j < 4 else str(j + 1)
-            story.append(Paragraph(f"{lbl}. {opt}", opt_st))
+            story.append(Paragraph(f"{lbl}. {_esc(str(opt))}", opt_st))
 
-        ans = q.get("correct_answer", "").strip()
+        ans = _esc(q.get("correct_answer", "").strip())
         if ans:
             story.append(Paragraph(f"Ans: {ans}", ans_st))
         story.append(Spacer(1, 6))
