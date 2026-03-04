@@ -196,46 +196,16 @@ def run_pipeline(
         watermark_path = script_dir / "pragati_setu.jpg"
         watermark = str(watermark_path) if watermark_path.exists() else None
 
-        # ── Try WeasyPrint ─────────────────────────────────────────────────────
+        # ── Generate PDFs via ReportLab (pure Python, no system libs needed) ──
         try:
-            from pdf_generator import PDFGenerator
-            from pdf_generator_compact import PDFGeneratorCompact
-
-            gen_detailed = PDFGenerator(
-                output_dir=str(output_dir), language="gu", watermark_image=watermark,
-            )
-            pdf_detailed = gen_detailed.generate_pdf(
-                questions_gu, start_date=date_str, end_date=date_str
-            )
-            if pdf_detailed:
-                result["pdf_detailed"] = pdf_detailed
-                log(f"✅  Detailed PDF (WeasyPrint) → {Path(pdf_detailed).name}")
-
-            gen_compact = PDFGeneratorCompact(
-                output_dir=str(output_dir), language="gu", watermark_image=watermark,
-            )
-            pdf_compact = gen_compact.generate_pdf(
-                questions_gu, start_date=date_str, end_date=date_str
-            )
-            if pdf_compact:
-                result["pdf_compact"] = pdf_compact
-                log(f"✅  Compact PDF (WeasyPrint)  → {Path(pdf_compact).name}")
-
+            _pdf_bytes = _generate_pdf_bytes_reportlab(questions_gu, date_str)
+            result["pdf_detailed_bytes"] = _pdf_bytes
+            result["pdf_compact_bytes"] = _pdf_bytes
+            log(f"✅  PDFs generated ({len(_pdf_bytes)//1024} KB)")
         except Exception as pdf_exc:
-            log(f"⚠️  WeasyPrint threw {pdf_exc.__class__.__name__}. Will use ReportLab.")
+            log(f"❌  PDF generation failed: {pdf_exc}")
 
-        # ── ReportLab fallback: runs if WeasyPrint failed silently (returned None)
-        #    OR threw an exception. pdf_generator.py catches its own errors and
-        #    returns None — so the except above may never fire, but PDFs still missing.
-        if "pdf_detailed" not in result and "pdf_detailed_bytes" not in result:
-            log("⚠️  WeasyPrint did not produce PDFs. Switching to ReportLab fallback …")
-            try:
-                _pdf_bytes = _generate_pdf_bytes_reportlab(questions_gu, date_str)
-                result["pdf_detailed_bytes"] = _pdf_bytes
-                result["pdf_compact_bytes"] = _pdf_bytes
-                log(f"✅  PDF generated via ReportLab ({len(_pdf_bytes)//1024} KB)")
-            except Exception as rl_exc:
-                log(f"❌  ReportLab also failed: {rl_exc}")
+
 
 
 
