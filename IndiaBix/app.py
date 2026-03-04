@@ -448,8 +448,16 @@ if st.session_state.running and not st.session_state.done and isinstance(st.sess
         unsafe_allow_html=True,
     )
 
-    st.session_state.result = result_holder.get("res")
+    res = result_holder.get("res") or {}
+    st.session_state.result = res
     st.session_state.logs = log_lines
+
+    # Read file bytes NOW (before rerun wipes the references) and cache in session state
+    st.session_state["_bytes_pdf_detailed"] = read_bytes(res.get("pdf_detailed"))
+    st.session_state["_bytes_pdf_compact"] = read_bytes(res.get("pdf_compact"))
+    st.session_state["_bytes_json_en"] = read_bytes(res.get("json_english"))
+    st.session_state["_bytes_json_gu"] = read_bytes(res.get("json_gujarati"))
+
     st.session_state.running = False
     st.session_state.done = True
     st.rerun()
@@ -469,38 +477,16 @@ if st.session_state.done and st.session_state.result:
     if not res.get("success"):
         st.error(f"Generation failed: {res.get('error', 'Unknown error')}", icon="❌")
     else:
-        st.markdown(
-f"""
-<div class="results-card">
-    <div class="status-pill">✓ Successfully Generated</div>
-    
-    <div class="stat-grid">
-        <div class="stat-item">
-            <span class="stat-label">Content Date</span>
-            <span class="stat-val">{res['date']}</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Questions Extracted</span>
-            <span class="stat-val">{res['questions_count']}</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">Language</span>
-            <span class="stat-val">Gujarati</span>
-        </div>
-    </div>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="results-card"><div class="status-pill">✓ Successfully Generated</div><div class="stat-grid"><div class="stat-item"><span class="stat-label">Content Date</span><span class="stat-val">{res["date"]}</span></div><div class="stat-item"><span class="stat-label">Questions Extracted</span><span class="stat-val">{res["questions_count"]}</span></div><div class="stat-item"><span class="stat-label">Language</span><span class="stat-val">Gujarati</span></div></div></div>', unsafe_allow_html=True)
         
         st.markdown(f"<h4 style='margin: 1.5rem 0 1rem; color: {t['text']}; font-size: 1.1rem;'>Download Assets</h4>", unsafe_allow_html=True)
 
         dl1, dl2, dl3, dl4 = st.columns(4)
 
         with dl1:
-            data = read_bytes(res.get("pdf_detailed"))
+            data = st.session_state.get("_bytes_pdf_detailed")
             st.download_button(
-                label="Detailed PDF",
+                label="📄 Detailed PDF",
                 data=data or b"",
                 file_name=f"pragati_setu_detailed_{res['date']}.pdf",
                 mime="application/pdf",
@@ -509,9 +495,9 @@ f"""
             )
 
         with dl2:
-            data = read_bytes(res.get("pdf_compact"))
+            data = st.session_state.get("_bytes_pdf_compact")
             st.download_button(
-                label="Compact Tables PDF",
+                label="📋 Compact PDF",
                 data=data or b"",
                 file_name=f"pragati_setu_compact_{res['date']}.pdf",
                 mime="application/pdf",
@@ -520,9 +506,9 @@ f"""
             )
 
         with dl3:
-            data = read_bytes(res.get("json_gujarati"))
+            data = st.session_state.get("_bytes_json_gu")
             st.download_button(
-                label="Gujarati Data (JSON)",
+                label="🔤 Gujarati JSON",
                 data=data or b"",
                 file_name=f"pragati_setu_gu_{res['date']}.json",
                 mime="application/json",
@@ -531,9 +517,9 @@ f"""
             )
 
         with dl4:
-            data = read_bytes(res.get("json_english"))
+            data = st.session_state.get("_bytes_json_en")
             st.download_button(
-                label="English Data (JSON)",
+                label="🔡 English JSON",
                 data=data or b"",
                 file_name=f"pragati_setu_en_{res['date']}.json",
                 mime="application/json",
