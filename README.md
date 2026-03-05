@@ -8,7 +8,7 @@ It's designed to run both locally on your computer and be easily deployed online
 
 The core logic of the scraper is simple but robust:
 
-1. **Navigating Dates:** The scraper takes a start date and an end date. It visits the IndiaBix website for each specific date.
+1. **Dropping a Link:** Instead of scrolling through endless calendars, you just paste the exact link to the current affairs page you want (like a specific day on IndiaBix or PendulumEdu). The scraper instantly goes straight to that exact page.
 2. **Extracting Data:** It carefully pulls out the question text, the multiple-choice options, the correct answer, and the detailed explanation.
 3. **Translation:** Since the original content is in English, the script uses `deep-translator` (Google Translate) to translate the questions and explanations into Gujarati. It handles the translation in small, safe chunks to prevent the translation service from blocking us.
 4. **Saving:** The raw data is saved as simple JSON files in the `output/` folder so you always have the original text if you need it.
