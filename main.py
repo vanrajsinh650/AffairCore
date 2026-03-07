@@ -145,6 +145,7 @@ def main():
         print(f"\nfiles created:")
         print(f"output/questions_english.json")
         print(f"output/questions_gujarati.json")
+        print(f"output/thumbnail_link.txt")
         if pdf_path_detailed:
             print(f"{pdf_path_detailed}")
         if pdf_path_compact:

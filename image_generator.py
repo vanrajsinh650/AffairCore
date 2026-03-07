@@ -45,8 +45,6 @@ def generate_visual_prompt_from_context(Gujarati_json_context):
         return "daily current affairs news update"
 
 def get_ai_image_url(Gujarati_questions_list):
-    print(f"Creating AI prompt for: {Gujarati_questions_list}")
-    
     ai_visual_prompt = generate_visual_prompt_from_context(Gujarati_questions_list)
     final_prompt = f"Professional clean flat design news icon illustration, topic: {ai_visual_prompt}"
 
