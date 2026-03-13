@@ -28,7 +28,7 @@ SCHEDULE_HOUR = 23
 SCHEDULE_MINUTE = 59
 
 # how many days to scrape backwards
-DAYS_TO_SCRAPE = 3
+DAYS_TO_SCRAPE = 2
 
 
 def get_date_range():

@@ -6,12 +6,8 @@ from pathlib import Path
 from typing import Callable, Optional
 from scraper import scrape_date_wise, create_session
 from translator import translate_questions_with_ai
-from image_generator import get_ai_image_url
-from imgbb_uploader import upload_image_to_imgbb
 from pdf_generator import PDFGenerator
 from pdf_generator_compact import PDFGeneratorCompact
-from scraper import scrape_date_wise, create_session
-from translator import translate_questions_with_ai
 
 class CallbackHandler(logging.Handler):
     """sends every log record to a callback(str)."""
@@ -47,17 +43,20 @@ def run_pipeline(
         if log_callback:
             log_callback(msg)
 
+    assert isinstance(date_obj, datetime), "date_obj must be a datetime object"
+
     # redirect root logger to callback, suppress console output
     root_logger = logging.getLogger()
     old_handlers = root_logger.handlers[:]
     cb_handler = None
 
-    # remove existing console stream handlers
-    stream_handlers = [h for h in old_handlers if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler)]
-    for sh in stream_handlers:
-        root_logger.removeHandler(sh)
+   
 
     if log_callback:
+         # remove existing console stream handlers
+        stream_handlers = [h for h in old_handlers if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler)]
+        for sh in stream_handlers:
+            root_logger.removeHandler(sh)
         cb_handler = CallbackHandler(log_callback)
         cb_handler.setFormatter(logging.Formatter("%(levelname)s  %(message)s"))
         root_logger.addHandler(cb_handler)
@@ -84,6 +83,10 @@ def run_pipeline(
         log("step 2/3 — translating to gujarati (ai)...")
         log("this may take a few minutes...")
         questions_gu = translate_questions_with_ai(questions_en)
+        if not questions_gu:
+            result["error"] = "translation failed, no questions to process further."
+            log(result["error"])
+            return result
         log(f"translation complete — {len(questions_gu)} questions ready")
 
         # save jsons
@@ -103,22 +106,6 @@ def run_pipeline(
         result["json_gujarati"] = str(json_gu_path)
         log(f"json files saved to output/")
 
-        # generate images
-        try:
-            log("generating images for questions...")
-            base64_images = get_ai_image_url(questions_gu)
-            if base64_images:
-                permanent_urls = upload_image_to_imgbb(base64_images)
-                if permanent_urls:
-                    link_path = output_dir / "image_links.txt"
-                    link_path.write_text("\n".join(permanent_urls), encoding="utf-8")
-                    log(f"images uploaded to imgbb, links saved to {link_path.name}")
-                else:
-                    log("image upload failed, skipping image links")
-            else:
-                log("image generation failed, skipping images")
-        except Exception as img_exc:
-            log(f"image generation/upload failed: {img_exc}")
 
         # generate pdfs
         log("step 3/3 — generating pdfs...")
@@ -127,9 +114,6 @@ def run_pipeline(
 
         # generate pdfs using weasyprint fallback
         try:
-            from pdf_generator import PDFGenerator
-            from pdf_generator_compact import PDFGeneratorCompact
-
             # detailed pdf
             gen_detailed = PDFGenerator(
                 output_dir=str(output_dir), language="gu", watermark_image=watermark,
@@ -162,7 +146,7 @@ def run_pipeline(
 
     except Exception as exc:
         result["error"] = str(exc)
-        log(f"Error: {exc}")
+        log(f"Error: {exc}\n{traceback.format_exc()}")
 
     finally:
         # Restore original logger handlers
@@ -173,7 +157,5 @@ def run_pipeline(
         for h in old_handlers:
             if h not in root_logger.handlers:
                 root_logger.addHandler(h)
-
-    root_logger.addHandler(CallbackHandler(log_callback))
 
     return result

@@ -9,9 +9,6 @@ from scraper import scrape_weekly_questions
 from translator import translate_questions_with_ai
 from pdf_generator import PDFGenerator
 from pdf_generator_compact import PDFGeneratorCompact
-from image_generator import get_ai_image_url
-from imgbb_uploader import upload_url_to_imagebb
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -51,16 +48,8 @@ def main():
         
         gujarati_questions = translate_questions_with_ai(questions)
 
-        #image generation and json packging box
+        # json packaging box
         try:
-            logger.info("generating context-aware thumbnail...")
-            print("\ngenerating AI thumbnail using groq LLM and pollinations image generation...")
-
-            ai_url = get_ai_image_url(gujarati_questions)
-
-            logger.info("uploding thumbnail to imageBB...")
-            pemanent_image_url = upload_url_to_imagebb(ai_url)
-
             output_dir = Path(__file__).parent / "output"
             output_dir.mkdir(exist_ok=True)
 
@@ -69,21 +58,9 @@ def main():
             with open(gujarati_json_path, "w", encoding="utf-8") as f:
                 json.dump(gujarati_questions, f, ensure_ascii=False, indent=4)
 
-            link_path = output_dir / "thumbnail_link.txt"
-            if pemanent_image_url:
-                with open(link_path, "w", encoding="utf-8") as f:
-                    f.write(pemanent_image_url)
-                logger.info(f"thumbnail uploaded to imageBB: {pemanent_image_url}")
-                print(f"thumbnail uploaded to imageBB: {pemanent_image_url}")
-            else:
-                logger.warning("thumbnail upload failed, using original AI URL")
-                print("thumbnail upload failed, using original AI URL")
-                with open(link_path, "w", encoding="utf-8") as f:
-                    f.write(ai_url)
-
         except Exception as e:
-            logger.error(f"error in image generation or hosting: {str(e)}", exc_info=True)
-            print(f"\nerror in image generation or hosting: {str(e)}")
+            logger.error(f"error in saving JSON: {str(e)}", exc_info=True)
+            print(f"\nerror in saving JSON: {str(e)}")
 
         # use path to get watermark relative to this script file
         watermark_path = Path(__file__).parent / "pragati_setu.jpg"
@@ -145,7 +122,6 @@ def main():
         print(f"\nfiles created:")
         print(f"output/questions_english.json")
         print(f"output/questions_gujarati.json")
-        print(f"output/thumbnail_link.txt")
         if pdf_path_detailed:
             print(f"{pdf_path_detailed}")
         if pdf_path_compact:
