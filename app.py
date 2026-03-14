@@ -1,22 +1,11 @@
-"""
-app.py  —  Pragati Setu Current Affairs Scraper
-============================================================
-Run with:
-    streamlit run app.py
-"""
-
 import re
 import time
 import threading
 from datetime import datetime
 from pathlib import Path
 import base64
-
 import streamlit as st
 
-# ── Session-state initialisation (early so it's ready for config) ────────────
-# On a fresh page load, we always start clean (not running, not done).
-# Within a session, st.rerun() loops don't reset this because the session persists.
 _DEFAULTS = {
     "running": False,
     "done": False,
@@ -29,7 +18,7 @@ for key, default in _DEFAULTS.items():
     if key not in st.session_state:
         st.session_state[key] = default
 
-# ── Page config ───────────────────────────────────────────────────────────────
+#Page config
 logo_path = Path(__file__).parent / "pragati_setu.jpg"
 icon = str(logo_path) if logo_path.exists() else "🎯"
 
@@ -40,7 +29,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ── Dynamic Theme & CSS ───────────────────────────────────────────────────────
+#Dynamic Theme & CSS
 themes = {
     "Light": {
         "bg": "#fafafa", "text": "#171717", "subtext": "#737373", 
@@ -307,7 +296,7 @@ st.markdown(
 )
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+#Helpers 
 INDIABIX_PATTERN = re.compile(
     r"https?://(?:www\.)?indiabix\.com/current-affairs/(\d{4}-\d{2}-\d{2})/?",
     re.IGNORECASE,
@@ -341,7 +330,7 @@ def get_logo_base64():
     return ""
 
 
-# ── Main Layout ───────────────────────────────────────────────────────────────
+#Main Layout
 st.markdown('<div class="main-wrapper">', unsafe_allow_html=True)
 
 # Top Bar (Logo + Toggles)
@@ -359,8 +348,8 @@ st.markdown(f"""
         </div>
 """, unsafe_allow_html=True)
 
-# We use columns just for the interactive parts holding the radio & button
-# But wrap them so they sit nicely on mobile
+
+#For mobile
 col_theme, = st.columns([1])
 with col_theme:
     new_theme = st.radio(
@@ -377,8 +366,8 @@ with col_theme:
 st.markdown("</div>", unsafe_allow_html=True) # close top-bar-container
 
 
-# ── Input section ─────────────────────────────────────────────────────────────
-# We use st.container to group, letting our mobile CSS handle stacking
+# Input section
+#use st.container to group, letting our mobile CSS handle stacking
 with st.container():
     col_input, col_btn = st.columns([3, 1], vertical_alignment="bottom")
 
@@ -399,7 +388,7 @@ with col_btn:
         use_container_width=True,
     )
 
-# ── Validation & kick off ─────────────────────────────────────────────────────
+#Validation & kick off
 if run_clicked:
     date_obj, err = parse_url(url_input)
     if err:
@@ -412,7 +401,7 @@ if run_clicked:
         st.session_state["_date_obj"] = date_obj
         st.rerun()
 
-# ── Running pipeline (threaded) ───────────────────────────────────────────────
+#Running pipeline (threaded)
 # Strict check: only run if BOTH running=True AND a valid date was set THIS session
 if st.session_state.running and not st.session_state.done and isinstance(st.session_state.get("_date_obj"), datetime):
     from scraper_runner import run_pipeline
@@ -467,7 +456,7 @@ if st.session_state.running and not st.session_state.done and isinstance(st.sess
     st.session_state.done = True
     st.rerun()
 
-# ── Show saved logs when done ─────────────────────────────────────────────────
+#Show saved logs when done
 if st.session_state.done and st.session_state.logs:
     with st.expander("Show Process Logs", expanded=False):
         st.markdown(
@@ -475,7 +464,7 @@ if st.session_state.done and st.session_state.logs:
             unsafe_allow_html=True,
         )
 
-# ── Results & downloads ───────────────────────────────────────────────────────
+#Results & downloads 
 if st.session_state.done and st.session_state.result:
     res = st.session_state.result
 
