@@ -1,10 +1,13 @@
 import os
 import logging
+import base64
 from datetime import datetime
 from typing import List, Dict
+
+from config import APP_URL, BRAND_NAME
+
 # NOTE: weasyprint is imported lazily inside generate_pdf() to avoid
 # module-level crashes on Streamlit Cloud when system libs are not yet loaded.
-import base64
 
 
 logger = logging.getLogger(__name__)
@@ -24,8 +27,8 @@ class PDFGeneratorCompact:
         self.output_dir = output_dir
         self.language = language
         self.watermark_image = watermark_image
-        self.app_url = "https://play.google.com/store/apps/details?id=com.pragatisetu.app"
-        self.brand_name = "Indiabix"
+        self.app_url = APP_URL
+        self.brand_name = BRAND_NAME
         
         os.makedirs(output_dir, exist_ok=True)
         logger.info(f"Initialized compact PDF generator for language: {language}")

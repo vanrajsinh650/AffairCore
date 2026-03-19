@@ -4,6 +4,8 @@ import os
 import re
 import time
 import socket
+import textwrap
+from typing import Optional, List, Dict, Tuple, Any, cast
 from deep_translator import GoogleTranslator
 from dotenv import load_dotenv
 from groq import Groq
@@ -23,6 +25,8 @@ logger = logging.getLogger(__name__)
 class GroqTranslator:
     """Translation using Groq LLM (much faster and more reliable than Google Translate)"""
     
+    client: Optional[Groq]
+    
     def __init__(self):
         self.api_key = os.getenv("GROQ_API_KEY")
         if not self.api_key:
@@ -40,7 +44,7 @@ class GroqTranslator:
     def translate_batch(self, questions: list) -> list:
         """Translate all questions in batches for speed and context"""
         if not self.client:
-            return None
+            return []
 
         translated = []
         total = len(questions)
@@ -48,6 +52,10 @@ class GroqTranslator:
         # We can translate questions one by one or in small batches
         # For simplicity and to avoid context window issues, we'll do one by one but without delays
         for i, q in enumerate(questions, 1):
+            if not self.client: # Re-check for type narrowing
+                translated.append(q)
+                continue
+                
             print(f"Translating Q{i}/{total} with Groq...", end=" ", flush=True)
             try:
                 # Prepare a structured prompt for the LLM
@@ -64,7 +72,9 @@ class GroqTranslator:
                 Do not include any conversational text.
                 """
                 
-                response = self.client.chat.completions.create(
+                # Explicitly cast to avoid NoneType linter error
+                safe_client = cast(Groq, self.client)
+                response = safe_client.chat.completions.create(
                     messages=[
                         {"role": "system", "content": "You are a professional English-to-Gujarati translator specializing in competitive exam content."},
                         {"role": "user", "content": prompt}
@@ -73,14 +83,18 @@ class GroqTranslator:
                     response_format={"type": "json_object"}
                 )
                 
-                result = json.loads(response.choices[0].message.content)
+                content = response.choices[0].message.content
+                if not content:
+                    raise ValueError("Empty response from Groq")
+                
+                result = json.loads(content)
                 
                 t_q = q.copy()
                 t_q.update({
-                    "question": result.get("question", q["question"]),
-                    "options": result.get("options", q["options"]),
-                    "answer": result.get("answer", q["answer"]),
-                    "explanation": result.get("explanation", q["explanation"]),
+                    "question": str(result.get("question", q["question"])),
+                    "options": list(result.get("options", q["options"])),
+                    "answer": str(result.get("answer", q["answer"])),
+                    "explanation": str(result.get("explanation", q["explanation"])),
                 })
                 translated.append(t_q)
                 print("DONE!")
@@ -107,18 +121,17 @@ class ImprovedGujaratiTranslator:
     def preprocess_text(self, text: str) -> tuple[str, dict]:
         """Clean English before translation & extract entities"""
         if not text:
-            return text, {}
+            return "", {}
         
         # Store proper nouns and special terms to restore later
         entities = {}
-        counter = 0
+        state = {'counter': 0}
         
         # Protect proper nouns (capitalized words)
         def protect_entity(match):
-            nonlocal counter
-            placeholder = f"__ENTITY{counter}__"
+            placeholder = f"__ENTITY{state['counter']}__"
             entities[placeholder] = match.group(0)
-            counter += 1
+            state['counter'] += 1
             return placeholder
         
         # Protect: Article numbers
@@ -147,7 +160,7 @@ class ImprovedGujaratiTranslator:
     def postprocess_text(self, gujarati: str, entities: dict) -> str:
         """Restore entities after translation"""
         if not gujarati:
-            return gujarati
+            return ""
         
         # Restore protected entities
         for placeholder, original in entities.items():
@@ -167,19 +180,30 @@ class ImprovedGujaratiTranslator:
         
         # Preprocess
         clean_text, entities = self.preprocess_text(text)
+        if not clean_text or not self.translator:
+            return text
+            
+        curr_text: str = str(clean_text)
         
         # Translate
         for attempt in range(max_retries):
             try:
-                if len(clean_text) > 4500:
-                    chunks = [clean_text[i:i+4500] for i in range(0, len(clean_text), 4500)]
-                    result = ' '.join([self.translator.translate(chunk) for chunk in chunks])
+                if len(curr_text) > 4500:
+                    # textwrap.wrap produces a list of strings
+                    chunks = textwrap.wrap(curr_text, 4500, break_long_words=True, replace_whitespace=False)
+                    
+                    result_list: List[str] = []
+                    for chunk_item in chunks:
+                        res = self.translator.translate(chunk_item)
+                        if res:
+                            result_list.append(str(res))
+                    result = ' '.join(result_list)
                 else:
-                    result = self.translator.translate(clean_text)
+                    result = self.translator.translate(curr_text)
                 
                 if result and '□' not in result:
                     # Postprocess
-                    result = self.postprocess_text(result, entities)
+                    result = self.postprocess_text(str(result), entities)
                     return result
                     
             except Exception as e:

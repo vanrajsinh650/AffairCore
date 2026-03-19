@@ -18,8 +18,10 @@ for key, default in _DEFAULTS.items():
     if key not in st.session_state:
         st.session_state[key] = default
 
+from config import WATERMARK_FILENAME
+
 #Page config
-logo_path = Path(__file__).parent / "pragati_setu.jpg"
+logo_path = Path(__file__).parent / WATERMARK_FILENAME
 icon = str(logo_path) if logo_path.exists() else "🎯"
 
 st.set_page_config(

@@ -22,6 +22,11 @@ PDF_OUTPUT_DIR = "output"
 PDF_FONT_SIZE = 12
 PDF_TITLE_FONT_SIZE = 16
 
+# branding and output config
+BRAND_NAME = "Indiabix"
+APP_URL = "https://play.google.com/store/apps/details?id=com.pragatisetu.app"
+WATERMARK_FILENAME = "pragati_setu.jpg"
+
 # scheduler configuration
 SCHEDULE_DAY = "sun"  # run every sunday
 SCHEDULE_HOUR = 23
