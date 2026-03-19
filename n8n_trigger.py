@@ -8,6 +8,10 @@ from scraper_runner import run_pipeline
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("n8n-trigger")
+log_path = "/home/vanrajsinh/Projects/current_affairs_scraper/n8n_trigger.log"
+file_handler = logging.FileHandler(log_path)
+file_handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+logger.addHandler(file_handler)
 
 class TriggerHandler(BaseHTTPRequestHandler):
     def do_GET(self):
