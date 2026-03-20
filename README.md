@@ -38,7 +38,7 @@ The Pragati Setu Suite is designed for maximum portability. Choose the method th
 ### 🌐 Live Dashboard
 
 Access the production-grade application instantly via Streamlit Cloud:
-**[Launch AffairCore (Pragati Setu)]([https://affaircore.streamlit.app/])**
+**[Launch AffairCore (Pragati Setu)]((https://affaircore.streamlit.app/))**
 
 ---
 
